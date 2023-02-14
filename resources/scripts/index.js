@@ -6,15 +6,19 @@ AddNewSongBySubmit();
 function AddNewSongBySubmit(){
     let form = document.getElementById("newSongForm");
     form.addEventListener('submit',function(e){
+        e.preventDefault();
         let currentDate = new Date().toLocaleString().slice(0,9);
         let newSong = {
             title: e.target.elements.songTitle.value,
             artist: e.target.elements.songArtist.value,
             favorited: false,
             deleted: false,
-            date: currentDate
+            date: currentDate,
+            ID: ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
+                (c) =>(c ^(crypto.getRandomValues(new Uint8Array(1))[0] &(15 >> (c / 4))))
+                .toString(16)
+            )
         }
-
         let songTitleIndex = allsongs.findIndex(function(element){
             if (element.title == newSong.title) {
                 return indexedDB;
@@ -32,12 +36,13 @@ function AddNewSongBySubmit(){
                 allsongs[songTitleIndex].favorited = false;
                 localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
                 var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
+                
                 if(elementExists == null){
                     window.location.reload();
                 }
         }
         }catch{
-            e.preventDefault();
+            
             allsongs.push(newSong);
             localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
             CreateNewCard(newSong);
