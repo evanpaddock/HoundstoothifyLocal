@@ -28,7 +28,7 @@ function AddNewSongBySubmit(){
                 allsongs[songFoundIndex].deleted = false;
                 allsongs[songFoundIndex].favorited = false;
 
-                localStorage.setItem("1", JSON.stringify(allsongs));
+                localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
 
                 var elementExists = document.getElementById(`${allsongs[songFoundIndex].ID}`);
                 if(elementExists == null){
@@ -38,7 +38,7 @@ function AddNewSongBySubmit(){
         }catch{
             e.preventDefault();
             allsongs.push(newSong);
-            localStorage.setItem("1", JSON.stringify(allsongs));
+            localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
             CreateNewCard(newSong);
         }
         e.target.elements.songTitle.value = null;
@@ -53,7 +53,7 @@ function CreateNewCard(song){
 
 function OnLoad(){
     //read in array of objects
-   let allsongs = JSON.parse(localStorage.getItem("1"))
+   let allsongs = JSON.parse(localStorage.getItem("Houndstoothify-Songs"))
    try{let success = allsongs[0].deleted}
    catch{
     allsongs = []
@@ -86,7 +86,7 @@ function FavoriteASong(){
         allsongs[foundIndex].favorited = true;
     }
 
-    localStorage.setItem("1", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
@@ -106,7 +106,7 @@ function DeleteASong(){
         allsongs[foundIndex].deleted = true;
     }
 
-    localStorage.setItem("1", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
