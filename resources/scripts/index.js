@@ -6,7 +6,7 @@ AddNewSongBySubmit();
 function AddNewSongBySubmit(){
     let form = document.getElementById("newSongForm");
     form.addEventListener('submit',function(e){
-        let currentDate = new Date().toJSON().slice(0,10)
+        let currentDate = new Date().toLocaleString().slice(0,9);
         let newSong = {
             title: e.target.elements.songTitle.value,
             artist: e.target.elements.songArtist.value,
@@ -29,7 +29,7 @@ function AddNewSongBySubmit(){
         try{
             if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songTitleIndex].title){
                 allsongs[songTitleIndex].deleted = false;
-                localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
+                localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
                 var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
                 if(elementExists == null){
                     window.location.reload();
@@ -38,7 +38,7 @@ function AddNewSongBySubmit(){
         }catch{
             e.preventDefault();
             allsongs.push(newSong);
-            localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
+            localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
             CreateNewCard(newSong);
         }
         e.target.elements.songTitle.value = null;
@@ -53,7 +53,7 @@ function CreateNewCard(song){
 
 function OnLoad(){
     //read in array of objects
-   let allsongs = JSON.parse(localStorage.getItem("Houndstoothify_Songs"))
+   let allsongs = JSON.parse(localStorage.getItem("Houndstoothify-Songs"))
    try{let success = allsongs[0].deleted}
    catch{
     allsongs = []
@@ -86,7 +86,7 @@ function FavoriteASong(){
         allsongs[foundIndex].favorited = true;
     }
 
-    localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
@@ -106,7 +106,7 @@ function DeleteASong(){
         allsongs[foundIndex].deleted = true;
     }
 
-    localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
