@@ -29,14 +29,14 @@ function AddNewSongBySubmit(){
         })
         if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songArtistIndex].title){
             allsongs[songTitleIndex].deleted = false;
-            localStorage.setItem("1", JSON.stringify(allsongs));
+            localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
             var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
             if(elementExists == null){
                 CreateNewCard(allsongs[songTitleIndex]);
             }
         }else{
             allsongs.push(newSong);
-            localStorage.setItem("1", JSON.stringify(allsongs));
+            localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
             CreateNewCard(newSong);
         }
         e.target.elements.songTitle.value = null;
@@ -51,7 +51,7 @@ function CreateNewCard(song){
 
 function OnLoad(){
     //read in array of objects
-   let allsongs = JSON.parse(localStorage.getItem("1"))
+   let allsongs = JSON.parse(localStorage.getItem("HoundsToothify_AllSongs"))
    try{let success = allsongs[0].deleted}
    catch{
     allsongs = []
@@ -84,7 +84,7 @@ function FavoriteASong(){
         allsongs[foundIndex].favorited = true;
     }
 
-    localStorage.setItem("1", JSON.stringify(allsongs));
+    localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
@@ -104,7 +104,7 @@ function DeleteASong(){
         allsongs[foundIndex].deleted = true;
     }
 
-    localStorage.setItem("1", JSON.stringify(allsongs));
+    localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
