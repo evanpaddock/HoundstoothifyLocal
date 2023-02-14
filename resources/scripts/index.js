@@ -55,7 +55,7 @@ function OnLoad(){
    try{let success = allsongs[0].deleted}
    catch{
     allsongs = []
-    alert("songs failed to load or are available")
+    alert("songs failed to load or are unavailable")
     }
 
     //write all cards for objects
