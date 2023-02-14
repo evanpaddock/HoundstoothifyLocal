@@ -29,6 +29,7 @@ function AddNewSongBySubmit(){
         try{
             if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songTitleIndex].title){
                 allsongs[songTitleIndex].deleted = false;
+                allsongs[songTitleIndex].favorited = false;
                 localStorage.setItem("Houndstoothify-Songs", JSON.stringify(allsongs));
                 var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
                 if(elementExists == null){
