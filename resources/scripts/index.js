@@ -19,28 +19,25 @@ function AddNewSongBySubmit(){
             )
         }
 
-        let songTitleIndex = allsongs.findIndex(function(element){
-            if (element.title == newSong.title) {
+            let songFoundIndex = allsongs.findIndex(function(element){
+            if (element.artist == newSong.artist && element.title == newSong.title) {
                 return indexedDB;
             }
         })
-
-        let songArtistIndex = allsongs.findIndex(function(element){
-            if (element.artist == newSong.artist) {
-                return indexedDB;
-            }
-        })
+        console.log(songFoundIndex)
         try{
-            if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songTitleIndex].title){
-                allsongs[songTitleIndex].deleted = false;
-                allsongs[songTitleIndex].favorited = false;
+                allsongs[songFoundIndex].deleted = false;
+                allsongs[songFoundIndex].favorited = false;
+                console.log(1)
                 localStorage.setItem("1", JSON.stringify(allsongs));
-                var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
+                console.log(2)
+                var elementExists = document.getElementById(`${allsongs[songFoundIndex].ID}`);
                 if(elementExists == null){
                     window.location.reload();
                 }
-        }
+                console.log("Here")
         }catch{
+            console.log("There")
             e.preventDefault();
             allsongs.push(newSong);
             localStorage.setItem("1", JSON.stringify(allsongs));
