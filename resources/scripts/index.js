@@ -24,20 +24,18 @@ function AddNewSongBySubmit(){
                 return indexedDB;
             }
         })
-        console.log(songFoundIndex)
         try{
                 allsongs[songFoundIndex].deleted = false;
                 allsongs[songFoundIndex].favorited = false;
-                console.log(1)
+
                 localStorage.setItem("1", JSON.stringify(allsongs));
-                console.log(2)
+
                 var elementExists = document.getElementById(`${allsongs[songFoundIndex].ID}`);
                 if(elementExists == null){
                     window.location.reload();
                 }
-                console.log("Here")
+
         }catch{
-            console.log("There")
             e.preventDefault();
             allsongs.push(newSong);
             localStorage.setItem("1", JSON.stringify(allsongs));
