@@ -6,7 +6,6 @@ AddNewSongBySubmit();
 function AddNewSongBySubmit(){
     let form = document.getElementById("newSongForm");
     form.addEventListener('submit',function(e){
-        e.preventDefault();
         let currentDate = new Date().toJSON().slice(0,10)
         let newSong = {
             title: e.target.elements.songTitle.value,
@@ -27,16 +26,19 @@ function AddNewSongBySubmit(){
                 return indexedDB;
             }
         })
-        if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songArtistIndex].title){
-            allsongs[songTitleIndex].deleted = false;
-            localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
-            var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
-            if(elementExists == null){
-                CreateNewCard(allsongs[songTitleIndex]);
-            }
-        }else{
+        try{
+            if(newSong.artist === allsongs[songArtistIndex].artist && newSong.title ===allsongs[songTitleIndex].title){
+                allsongs[songTitleIndex].deleted = false;
+                localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
+                var elementExists = document.getElementById(`${allsongs[songTitleIndex].title}`);
+                if(elementExists == null){
+                    window.location.reload();
+                }
+        }
+        }catch{
+            e.preventDefault();
             allsongs.push(newSong);
-            localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
+            localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
             CreateNewCard(newSong);
         }
         e.target.elements.songTitle.value = null;
@@ -51,11 +53,11 @@ function CreateNewCard(song){
 
 function OnLoad(){
     //read in array of objects
-   let allsongs = JSON.parse(localStorage.getItem("HoundsToothify_AllSongs"))
+   let allsongs = JSON.parse(localStorage.getItem("Houndstoothify_Songs"))
    try{let success = allsongs[0].deleted}
    catch{
     allsongs = []
-    alert("songs failed to load or are unavailable")
+    alert("Songs failed to load or are not available.\nAdd a song to enable song storage.")
     }
 
     //write all cards for objects
@@ -84,7 +86,7 @@ function FavoriteASong(){
         allsongs[foundIndex].favorited = true;
     }
 
-    localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
@@ -104,7 +106,7 @@ function DeleteASong(){
         allsongs[foundIndex].deleted = true;
     }
 
-    localStorage.setItem("HoundsToothify_AllSongs", JSON.stringify(allsongs));
+    localStorage.setItem("Houndstoothify_Songs", JSON.stringify(allsongs));
 
     window.location.reload();
 }
